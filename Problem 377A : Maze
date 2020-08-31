@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+
+vector<string> vec;
+ 
+int neighbours(int i, int j, int n, int m)
+{
+    int cnt = 0; 
+    
+    if(i-1 >= 0 && vec[i-1][j] == '.') cnt++;
+    if(i+1 < n && vec[i+1][j] == '.') cnt++;
+    if(j-1 >= 0 && vec[i][j-1] == '.') cnt++;
+    if(j+1 < m && vec[i][j+1] == '.') cnt++;
+    
+    return cnt;
+}
+ 
+ll k;
+void dfs(int i, int j, int n, int m)
+{
+    if(i < 0 || i >= n || j < 0 || j >= m || vec[i][j] != '.' || k == 0) return;
+    
+    vec[i][j] = '1';
+    
+    dfs(i+1, j, n, m);
+    dfs(i-1, j, n, m);
+    dfs(i, j+1, n, m);
+    dfs(i, j-1, n, m);
+    
+    if(neighbours(i, j, n, m) == 0 && k > 0) 
+    {
+        vec[i][j] = 'X';
+        k--;
+        
+        return;
+    }
+    vec[i][j] = '.';
+}
+ 
+int32_t main()
+{
+    ll t = 1;
+    //cin >> t;
+    
+    while(t--)
+    {
+        ll n, m;
+        cin >> n >> m >> k;
+        
+        vec.resize(n);
+        for(int i = 0; i < n; i++) {
+            cin >> vec[i]; 
+        }
+        
+        for(int i = 0; i < vec.size(); i++)
+        {
+            for(int j = 0; j < vec[i].size(); j++)
+            {
+                if(vec[i][j] == '.')
+                {
+                    dfs(i, j, n, m);
+                }
+            }
+        }
+        for(int i = 0; i < vec.size(); i++)
+        {
+            for(int j = 0; j < vec[i].size(); j++)
+            {
+                cout<<vec[i][j];
+            }
+            cout<<"\n";
+        }
+        
+    }
+    return 0;
+}
