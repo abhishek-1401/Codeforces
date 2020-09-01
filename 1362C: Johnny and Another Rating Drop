@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+ 
+int main() 
+{
+	ll t;
+	cin >> t;
+	
+	while(t--)
+	{
+	    ll n;
+	    cin >> n;
+	    
+	    ll s = 0;
+	    
+	    for(int i = 0; i < 60; i++)
+	    {
+	        ll p = pow(2,i);
+	        ll res = n/p;
+	        
+	        s += res;
+	    }
+	    cout<<s<<"\n";
+	}
+	return 0;
+}
