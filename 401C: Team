@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+ 
+int main() 
+{
+	int n, m;
+	cin >> n >> m;
+	
+	if(m > (2*n)+2 || m+1 < n)
+	{
+	    cout<<"-1\n";
+	}
+	else if(n > m)
+	{
+	    string str = "";
+	    for(int i = 0; i < m; i++)
+	    {
+	        str += "01";
+	    }
+	    str += "0";
+	    cout<<str;
+	}
+	else
+	{
+	    string str = "";
+	    while(m != n && n > 0)
+	    {
+	        str += "110";
+	        m = m-2;
+	        n = n-1;
+	    }
+	    if(n == 0)
+	    {
+	        while(m--)
+	        {
+	            str += "1";
+	        }
+	    }
+	    else
+	    {
+	        while(m--)
+	        {
+	            str += "10";
+	        }
+	    }
+	    cout<<str<<"\n";
+	}
+	return 0;
+}
