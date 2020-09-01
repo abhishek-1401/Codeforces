@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+ 
+map<ll, vector<ll>> G;
+map<ll, ll> parent;
+ 
+void dfs(ll s, ll p)
+{
+    parent[s] = p;
+    for(auto i = G[s].begin(); i != G[s].end(); i++)
+    {
+        if(*i != p)
+        {
+            dfs(*i, s);
+        }
+    }
+    
+}
+int32_t main()
+{
+    ll t = 1;
+    
+    while(t--)
+    {
+        ll n;
+        cin >> n;
+        
+        for(int i = 0; i < n-1; i++)
+        {
+            int x, y;
+            cin >> x >> y;
+            
+            G[x].push_back(y);
+            G[y].push_back(x);
+        }
+ 
+        dfs(1, -1);
+        
+        vector<ll> vec(n);
+        for(int i = 0; i < n; i++)
+        {
+            cin >> vec[i];
+        }
+        
+        int i = 0, j = 1, f = 0;
+        while(j < n)
+        {
+            if(i == j) 
+            {
+                f = 1;
+                break;
+            }
+            
+            if(parent[vec[j]] == vec[i]) j++;
+            else i++;
+        }
+        
+        if(f == 0) cout<<"Yes\n";
+        else cout<<"No\n";
+    }
+    return 0;
+}
