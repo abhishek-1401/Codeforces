@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define mod 1000000007
+ 
+ll dp[2001][2001];
+map<ll, set<ll>> mp;
+ 
+ll F(ll n, ll k)
+{
+    if(k == 1 || n == 1) return 1;
+    if(dp[n][k] != -1) return dp[n][k];
+    
+    ll ans =((F(n, k-1) % mod) + (F(1, k-1) % mod) % mod);
+    for(auto i = mp[n].begin(); i != mp[n].end(); i++)
+    {
+        ll s = 0, x = *i;
+        if(n % x == 0 && x == n/x)
+        {
+            s = (F(x, k-1)) % mod;
+        }
+        else if(n % x == 0)
+        {
+            s = (F(x, k-1) % mod) + (F(n/x, k-1) % mod) % mod;
+        }
+        ans = ((ans % mod) + (s % mod) % mod);
+    }
+    return dp[n][k] = ans % mod;
+}
+ 
+int32_t main()
+{
+    ll t = 1;
+    
+    while(t--)
+    {
+        ll n, k;
+        cin >> n >> k;
+        
+        for(ll i = 2; i <= 2000; i++)
+        {
+            for(ll j = 2; j <= sqrt(i); j++) 
+            { 
+                if (i % j == 0) 
+                { 
+                    mp[i].insert(j);
+                } 
+            } 
+        }
+        
+        memset(dp, -1, sizeof(dp));
+        
+        ll s = 0;
+        for(ll i = n; i >= 1; i--)
+        {
+            s = (s % mod + F(i, k) % mod) % mod;
+        }
+        cout<<(s % mod)<<"\n";
+    }
+    return 0;
+}
