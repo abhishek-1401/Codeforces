@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+#define ull unsigned long long
+ 
+map<ll, vector<ll>> G;
+map<ll, ll> child;
+ 
+ll ans = 0;
+void dfs(ll s, ll p)
+{
+    child[s] = 1;
+    for(auto i = G[s].begin(); i != G[s].end(); i++)
+    {
+        if(*i != p)
+        {
+            dfs(*i, s);
+            child[s] += child[*i];
+            
+            if(child[*i] % 2 == 0) ans++;
+        }
+    }
+    
+}
+int32_t main()
+{
+    ll t = 1;
+    
+    while(t--)
+    {
+        ll n;
+        cin >> n;
+        
+        for(int i = 0; i < n-1; i++)
+        {
+            int x, y;
+            cin >> x >> y;
+            
+            G[x].push_back(y);
+            G[y].push_back(x);
+        }
+ 
+        ans = 0;
+        dfs(1, -1);
+        
+        if(child[1] % 2 == 1) cout<<"-1\n";
+        else cout<<ans<<"\n";
+        
+    }
+    return 0;
+}
