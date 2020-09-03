@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+ 
+#define mod 1000000007
+ 
+int32_t main()
+{
+    ios::sync_with_stdio(0), cin.tie(0);
+    
+    ll t = 1;  
+    while(t--)
+    {
+        ll n;
+        cin >> n;
+        
+        queue<ll> q1, q2;
+        vector<ll> v1(n), v2(n);
+        
+        ll k1;
+        cin >> k1;
+        
+        for(int i = 0; i < k1; i++)
+        {
+            ll x;
+            cin >> x;
+            
+            v1[i] = x;
+            q1.push(x);
+        }
+        
+        ll k2;
+        cin >> k2;
+        
+        for(int i = 0; i < k2; i++)
+        {
+            ll x;
+            cin >> x;
+            
+            v2[i] = x;
+            q2.push(x);
+        }
+        set<queue<ll>> states;
+ 
+        int k = 0, f = 0;
+        while(1)
+        {
+            ll x = q1.front();
+            ll y = q2.front();
+            
+            q1.pop();
+            q2.pop();
+            
+            if(x > y)
+            {
+                q1.push(y);
+                q1.push(x);
+            }
+            else
+            {
+                q2.push(x);
+                q2.push(y);
+            }
+            
+            k++;
+            
+            if(states.count(q1) != 0 && states.count(q2) != 0)
+            {
+                break;
+            }
+            
+            states.insert(q1);
+            states.insert(q2);
+            
+            if(q1.empty())
+            {
+                f = 2;
+                break;
+            }
+            if(q2.empty())
+            {
+                f = 1;
+                break;
+            }
+        }
+    
+        if(f == 0) cout<<"-1\n";
+        else cout<<k<<" "<<f<<"\n";
+    }
+   
