@@ -1,0 +1,117 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+ 
+#define F first
+#define S second
+ 
+#define mod 1000000007
+ 
+int32_t main()
+{
+    ios::sync_with_stdio(0), cin.tie(0);
+    
+    ll t = 1;
+    cin >> t;
+    
+    while(t--)
+    {
+        ll n;
+        cin >> n;
+        
+        vector<pair<ll, ll>> vec(n);
+        for(int i = 0; i < n; i++)
+        {
+            ll a, b;
+            cin >> a >> b;
+            
+            vec[i] = {a,b};
+        }
+        
+        ll pos = 0, start = vec[0].F;
+        for(int i = 1; i < n; i++)
+        {
+            if(vec[i].F < start)
+            {
+                pos = i;
+                start = vec[i].F;
+            }
+            else if(vec[i].F == start)
+            {
+                if(vec[i].S > vec[pos].S)
+                {
+                    pos = i;
+                }
+            }
+        }
+        
+        ll s = 0, prev = vec[pos].S;
+        s += vec[pos].F;
+        
+        int i = pos;
+        
+        if(pos == n-1) i = 0;
+        else i=i+1;
+        
+        while(1)
+        {
+            if(i == n) i = 0;
+            if(i == pos) break;
+            
+            else
+            {
+                if(vec[i].F > prev)
+                {
+                    ll u = vec[i].F;
+                    u -= prev;
+                    s += u;
+                }
+                prev = vec[i].S;
+                i++;
+            }
+        }
+        
+        ll pos1 = 0, start1 = vec[0].S;
+        for(int j = 1; j < n; j++)
+        {
+            if(vec[j].S < start1)
+            {
+                pos1 = j;
+                start1 = vec[j].S;
+            }
+        }
+        if(pos1 == n-1) pos1 = 0;
+        else pos1 = pos1 + 1;
+        
+        ll s1 = 0, prev1 = vec[pos1].S;
+        s1 += vec[pos1].F;
+        
+        int j = pos1;
+        
+        if(pos1 == n-1) j = 0;
+        else j = j + 1;
+        
+        while(1)
+        {
+            if(j == n) j = 0;
+            if(j == pos1) break;
+            
+            else
+            {
+                if(vec[j].F > prev1)
+                {
+                    ll u = vec[j].F;
+                    u -= prev1;
+                    s1 += u;
+                }
+                prev1 = vec[j].S;
+                j++;
+            }
+        }
+        cout<<min(s,s1)<<"\n";
+    }
+    return 0;
+}
