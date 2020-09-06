@@ -70,7 +70,7 @@ int main()
             ans++;
         }
     }
-    ans -= 1;
+    ans = ans - 1;
     if(count == m) cout<<n<<endl;
     else
     {
