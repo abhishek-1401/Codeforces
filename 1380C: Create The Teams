@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+ 
+#define mod 1000000007
+ 
+int32_t main()
+{
+    ios::sync_with_stdio(0), cin.tie(0);
+    
+    ll t = 1;
+    cin >> t;
+    
+    while(t--)
+    {
+        ll n, x;
+        cin >> n >> x;
+       
+       vector<ll> vec(n);
+       for(int i = 0; i < n; i++)
+       {
+           cin >> vec[i];
+       }
+       
+       sort(vec.begin(), vec.end(), greater<ll>());
+       
+       ll min_element = INT_MAX, k = 0, cnt = 0;
+       for(int i = 0; i < n; i++)
+       {
+           min_element = min(min_element, vec[i]);
+           
+           //cout<<min_element<<" "<<i<<" "<<k<<"\n";
+           
+           if(min_element * (i-k+1) >= x)
+           {
+               cnt++;
+               min_element = INT_MAX;
+               
+               k = i+1;
+           }
+       }
+       cout<<cnt<<"\n";
+    }
+    return 0;
+}
