@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+ 
+#define mod 1000000007
+ 
+ll same(string &str, ll l, ll r, char ch)
+{
+    if(l == r) 
+    {
+        if(str[r] == ch) return 0;
+        return 1;
+    }
+    
+    ll mid = (l+r)/2;
+    
+    return same(str, l, mid, ch) + same(str, mid+1, r, ch);
+}
+ 
+ll F(string &str, ll l, ll r, char ch)
+{
+    if(l == r)
+    {
+        if(str[r] == ch) return 0;
+        return 1;
+    }
+    
+    ll mid = (l+r)/2;
+    
+    return min(same(str, l, mid, ch) + F(str, mid+1, r, ch+1), 
+               F(str, l, mid, ch+1) + same(str, mid+1, r, ch));
+}
+ 
+int32_t main()
+{
+    ios::sync_with_stdio(0), cin.tie(0);
+    
+    ll t = 1;
+    cin >> t;
+    
+    while(t--)
+    {
+        ll n;
+        cin >> n;
+        
+        string str;
+        cin >> str;
+        
+        cout<<F(str, 0, n-1, 'a')<<"\n";
+    }
+    return 0;
+}
